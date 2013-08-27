@@ -7,9 +7,9 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="18" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -23,6 +23,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="br.com.cineagora.ListaFilmeFragment"
+            android:label="@string/title_activity_lista_filme_fragment" >
         </activity>
     </application>
 

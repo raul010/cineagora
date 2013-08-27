@@ -1,27 +1,24 @@
-package br.com.cinemodel;
+package br.com.cinemodel.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cinema  {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Cinema implements Serializable {
+
+	private static final long serialVersionUID = 1574758147832526945L;
+
 	private String nome;
+
 	private Endereco endereco;
+
 	private List<Filme> filmes;
-	
-	public Cinema() {
-		filmes = new ArrayList<Filme>();
-	}
-	
-	public void addFilme(Filme filme) {
-		this.filmes.add(filme);
-	}
 	
 	public List<Filme> getFilmes() {
 		return filmes;
-	}
-	
-	public void setFilmes(List<Filme> filmes) {
-		this.filmes = filmes;
 	}
 
 	public String getNome() {
@@ -39,4 +36,5 @@ public class Cinema  {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
 }
