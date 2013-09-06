@@ -52,4 +52,12 @@ public class StringUtils {
 		}
 		return resultado;
 	}
+	
+	/*
+	 * retorna true se:
+	 * string != null && !string.equals("")
+	 */
+	public static boolean existe(String string) {
+		return string != null && !string.equals("");
+	}
 }
