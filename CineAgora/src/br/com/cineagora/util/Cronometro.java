@@ -26,7 +26,7 @@ public class Cronometro {
 
 	private void fechaCronometroEImprime(String mensagemAdicional) {
 		if (!auditoriaAtivada) {
-			Log.d("[Cronometro]", "pediu para encerrar cronometro, sem inicia-lo");
+			Log.w("[Cronometro]", "pediu para encerrar cronometro, sem inicia-lo");
 			return;
 		}
 		long fim = System.nanoTime() - inicioAuditoria;

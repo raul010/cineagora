@@ -1,11 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_container_outro"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
 <ListView
      	android:visibility="visible"
-        android:id="@+id/lista_filmes"
+        android:id="@+id/cinema_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+<ListView
+     	android:visibility="invisible"
+        android:id="@+id/filme_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CineAgora</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Cine Agora!</string>
+    <string name="action_settings">Opções</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_lista_filme_fragment">ListaFilmeFragment</string>
+    <string name="title_activity_lista_cinema_fragment">ListaCinemaFragment</string>
     <string name="title_activity_detalhes_filme_fragment">DetalhesFilmeFragment</string>
+    <string name="title_activity_fragment_stack_support">FragmentStackSupport</string>
+    <string name="home">Entrada</string>
+    <string name="new_fragment">Novo Fragmento</string>
+    <string name="delete_fragment">Deleta Fragmento</string>
+    <string name="title_activity_loader_cursor_support">LoaderCursorSupport</string>
+    <string name="title_activity_loader_custom_support">LoaderCustomSupport</string>
+    <string name="title_activity_loader_throttle_support">LoaderThrottleSupport</string>
 
 </resources>

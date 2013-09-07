@@ -3,13 +3,14 @@ package br.com.cineagora.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
@@ -33,8 +34,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 public class Util {
-
-	public static final String UTF_8 = "UTF-8";
+	public static final String LABEL_CINEMAS = "cinemas";
+	public static final String LABEL_CINEMA = "cinema";
+	public static final String LABEL_UTF_8 = "UTF-8";
 
 	public static final String HOST = "http://rachacuca.servegame.com";
 	public static final String URL_PATH = "/cineserver";
@@ -44,11 +46,10 @@ public class Util {
 	public static final String URL_DELIMITADOR = "frango";
 	public static final String URL_DELIMITADOR_PATTERN = "frango";
 
-	public static void fazRequestParaCache(String result) {
+	public static List<CinemaElementView> fazRequestParaCache(String cidadeEestado) {
 		String cidade = null;
 		String estado = null;
-		result = urlEncode(result);
-		String[] locais = result.split(URL_DELIMITADOR_PATTERN);
+		String[] locais = cidadeEestado.split(URL_DELIMITADOR_PATTERN);
 
 		if (locais.length == 2) {
 			cidade = locais[0];
@@ -59,20 +60,28 @@ public class Util {
 		String requestParaCache = null;
 
 		// e.g.
-		// http://www.host.com.br/cineserver/cinemas/cidade-estado/?cidade=Sao%20Paulo&estado=Sao%20Paulo
+		// http://localhost:8080/cineserver/cinemas/cidade-estado?cidade=S%C3%A3o%20Paulo&estado=S%C3%A3o%20Paulo
 		// (com seu devido acento)
 		requestParaCache = String.format("%s%s%s%s%s%s%s%s", HOST, URL_PATH, URL_CINEMAS, URL_CIDADE_ESTADO,
 				"?cidade=", cidade, "&estado=", estado);
-		fazRequest(requestParaCache);
+
+		String response = fazRequest(requestParaCache);
+		
+		return remontaDeStringParaJson(response);
+		
 	}
 
 	private static String fazRequest(String enderecoUrl) {
 		String response = null;
 		try {
+			enderecoUrl = fazEncodeParaASCII(enderecoUrl);
 			URL url = new URL(enderecoUrl);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
+			// Comentar esta linha para testes sem necessidade request
+			Log.d("Solicitou ","Request");
 			response = fazLeituraDoStream(con.getInputStream());
+			Log.d("Retornou ","Response");
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -97,35 +106,56 @@ public class Util {
 
 		return linha;
 	}
-	/**
-	 * Faz encode padrao de URL, para o mesmo formato que ser feito o decode
-	 * @param enderecoUrl
-	 * @return
-	 */
-	private static String urlEncode(String enderecoUrl) {
-		try {
-			return URLEncoder.encode(enderecoUrl, UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	public static ArrayList<CinemaElementView> recuperaObjetoListaDeCinemasDoSite() {
 		String response = fazRequest(HOST + URL_PATH + URL_CIDADE_ESTADO);
 
-		// 1- Remonta Strings em objeto Json
-		// 2- Para nao usar o mesmo model do server, se o que esta la eh
-		// (CinemaElement instanceof Cinema) no
-		// device fica (CinemaElementAdapter instanceof Cinema) -- Porem isso
-		// fica transparente ao desenvolvedor.
+		return remontaDeStringParaJson(response);
+	}
+
+	/**
+	 * 1- Remonta Strings em objeto Json; <br>2- Para nao usar o mesmo model do
+	 * server, se o que esta la eh (CinemaElement instanceof Cinema) no device
+	 * fica (CinemaElementAdapter instanceof Cinema) - Porem isso fica
+	 * transparente ao desenvolvedor.
+	 * 
+	 * @param response
+	 * @return lista de cinemas do response
+	 */
+	private static ArrayList<CinemaElementView> remontaDeStringParaJson(String response) {
 		Gson gson = new GsonBuilder().registerTypeAdapter(Cinema.class, new CinemaElementAdapter())
 				.registerTypeAdapter(Endereco.class, new EnderecoResumoAdapter())
 				.registerTypeAdapter(Filme.class, new FilmeCartazAdapter()).create();
 
 		Type collectionType = new TypeToken<ArrayList<CinemaElementView>>() {
 		}.getType();
+
 		return gson.fromJson(response, collectionType);
+	}
+
+	/**
+	 * Faz o encode correto, apenas da parte query do link
+	 * 
+	 * @param url
+	 * @return ascII
+	 */
+	public static String fazEncodeParaASCII(String url) {
+		URL urlApi;
+		URI uri;
+		try {
+			urlApi = new URL(url);
+			uri = new URI(urlApi.getProtocol(), urlApi.getUserInfo(), urlApi.getHost(), urlApi.getPort(),
+					urlApi.getPath(), urlApi.getQuery(), urlApi.getRef());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			// DEBUG
+			throw new RuntimeException(e);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			// DEBUG
+			throw new RuntimeException(e);
+		}
+		return uri.toASCIIString();
 	}
 
 	// Adpters (Filtros neste caso) necessarios para inicializacao dos Elementos
@@ -168,5 +198,7 @@ public class Util {
 			__cron.finaliza();
 		}
 	}
+
+	
 
 }

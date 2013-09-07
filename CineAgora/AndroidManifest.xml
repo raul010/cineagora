@@ -9,9 +9,11 @@
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+	
     <application
+        android:name="br.com.cineagora.util.GlobalCinema" 
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -26,12 +28,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.cineagora.FilmeFragment"
-            android:label="@string/title_activity_lista_filme_fragment" >
+            android:name="br.com.cineagora.CinemaFragment"
+            android:label="@string/title_activity_lista_cinema_fragment" >
         </activity>
         <activity
             android:name="br.com.cineagora.DetalhesFilmeFragment"
             android:label="@string/title_activity_detalhes_filme_fragment" >
+        </activity>
+        <activity
+            android:name="br.com.cineagora.FragmentStackSupport"
+            android:label="@string/title_activity_fragment_stack_support" >
+        </activity>
+        <activity
+            android:name="br.com.cineagora.LoaderCursorSupport"
+            android:label="@string/title_activity_loader_cursor_support" >
+        </activity>
+        <activity
+            android:name="br.com.cineagora.LoaderCustomSupport"
+            android:label="@string/title_activity_loader_custom_support" >
+        </activity>
+        <activity
+            android:name="br.com.cineagora.LoaderThrottleSupport"
+            android:label="@string/title_activity_loader_throttle_support" >
         </activity>
     </application>
 
