@@ -9,7 +9,6 @@ public enum DataApos {
 	private DataApos(int i) {
 		this.dia = i;
 	}
-
 	public int getDia() {
 		return dia;
 	}

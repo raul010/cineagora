@@ -5,6 +5,7 @@
     <string name="action_settings">Opções</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_lista_cinema_fragment">ListaCinemaFragment</string>
+    <string name="title_activity_lista_filmes_fragment">FilmesFragment</string>
     <string name="title_activity_detalhes_filme_fragment">DetalhesFilmeFragment</string>
     <string name="title_activity_fragment_stack_support">FragmentStackSupport</string>
     <string name="home">Entrada</string>

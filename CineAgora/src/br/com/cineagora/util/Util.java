@@ -18,12 +18,14 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
-import br.com.cinemodel.model.Cinema;
-import br.com.cinemodel.model.Endereco;
-import br.com.cinemodel.model.Filme;
 import br.com.cinemodel.view.CinemaElementView;
 import br.com.cinemodel.view.EnderecoResumoView;
 import br.com.cinemodel.view.FilmeCartazView;
+import br.com.cinemodel.view.NomeFilmeView;
+import br.com.model.Cinema;
+import br.com.model.Endereco;
+import br.com.model.Filme;
+import br.com.model.base.NomeFilme;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -107,11 +109,11 @@ public class Util {
 		return linha;
 	}
 
-	public static ArrayList<CinemaElementView> recuperaObjetoListaDeCinemasDoSite() {
-		String response = fazRequest(HOST + URL_PATH + URL_CIDADE_ESTADO);
-
-		return remontaDeStringParaJson(response);
-	}
+//	public static ArrayList<CinemaElementView> recuperaObjetoListaDeCinemasDoSite() {
+//		String response = fazRequest(HOST + URL_PATH + URL_CIDADE_ESTADO);
+//
+//		return remontaDeStringParaJson(response);
+//	}
 
 	/**
 	 * 1- Remonta Strings em objeto Json; <br>2- Para nao usar o mesmo model do
@@ -125,12 +127,18 @@ public class Util {
 	private static ArrayList<CinemaElementView> remontaDeStringParaJson(String response) {
 		Gson gson = new GsonBuilder().registerTypeAdapter(Cinema.class, new CinemaElementAdapter())
 				.registerTypeAdapter(Endereco.class, new EnderecoResumoAdapter())
-				.registerTypeAdapter(Filme.class, new FilmeCartazAdapter()).create();
+				.registerTypeAdapter(Filme.class, new FilmeCartazAdapter())
+				.registerTypeAdapter(NomeFilme.class, new NomeFilmeAdapter())
+				.create();
 
 		Type collectionType = new TypeToken<ArrayList<CinemaElementView>>() {
 		}.getType();
+		
+		Log.d("Iniciado", "Conversao Json");
+		ArrayList<CinemaElementView> listaCinemas = gson.fromJson(response, collectionType);
+		Log.d("Finalizado", "Conversao Json");
 
-		return gson.fromJson(response, collectionType);
+		return listaCinemas;
 	}
 
 	/**
@@ -179,6 +187,13 @@ public class Util {
 		public FilmeCartazView deserialize(JsonElement json, Type t, JsonDeserializationContext context)
 				throws JsonParseException {
 			return context.deserialize(json.getAsJsonObject(), FilmeCartazView.class);
+		}
+
+	}
+	public static class NomeFilmeAdapter implements JsonDeserializer<NomeFilmeView> {
+		public NomeFilmeView deserialize(JsonElement json, Type t, JsonDeserializationContext context)
+				throws JsonParseException {
+			return context.deserialize(json.getAsJsonObject(), NomeFilmeView.class);
 		}
 
 	}

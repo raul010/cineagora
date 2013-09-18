@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import br.com.cinemodel.model.element.CinemaElement;
+import br.com.model.element.CinemaElement;
 
 public class CinemaElementView extends CinemaElement implements Parcelable, Serializable {
 
 	private static final long serialVersionUID = -5539489760398028738L;
-	CinemaElementView cinema;
+	public CinemaElementView cinema;
 	
 	private CinemaElementView(Parcel in) {
 		cinema = (CinemaElementView) in.readSerializable();
 	}
-	private CinemaElementView (){
+	public CinemaElementView (){
 		
 	}
 

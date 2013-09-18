@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 	
     <application
-        android:name="br.com.cineagora.util.GlobalCinema" 
+        android:name="br.com.cineagora.util.CinemaApp" 
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -28,8 +28,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.cineagora.CinemaFragment"
+            android:name="br.com.cineagora.LoaderCinemaSupport"
             android:label="@string/title_activity_lista_cinema_fragment" >
+        </activity>
+        <activity
+            android:name="br.com.cineagora.FilmeFragment"
+            android:label="@string/title_activity_lista_filmes_fragment" >
         </activity>
         <activity
             android:name="br.com.cineagora.DetalhesFilmeFragment"

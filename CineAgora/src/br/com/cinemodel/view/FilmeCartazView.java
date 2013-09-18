@@ -2,7 +2,7 @@ package br.com.cinemodel.view;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import br.com.cinemodel.model.apresentacao.FilmeCartaz;
+import br.com.model.apresentacao.FilmeCartaz;
 
 public class FilmeCartazView extends FilmeCartaz implements Parcelable{
 
@@ -18,7 +18,7 @@ public class FilmeCartazView extends FilmeCartaz implements Parcelable{
 
 	@Override
 	public String toString() {
-		return this.getNome() + "\n" + this.getDiaSemana() + "\n" + this.getHorarios();
+		return this.getNomeFilme().getNomeDoFilme() + "\n" + this.getdia() + "\n" + this.getHorarios();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package br.com.cinemodel.view;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import br.com.cinemodel.model.apresentacao.EnderecoResumo;
+import br.com.model.apresentacao.EnderecoResumo;
 
 public class EnderecoResumoView extends EnderecoResumo implements Parcelable {
 	

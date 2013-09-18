@@ -35,6 +35,7 @@ public class LoaderCursorSupport extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("abc", "abc");
 
         FragmentManager fm = getSupportFragmentManager();
 
